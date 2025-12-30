@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فريق العمل | شبكة نوافذ الإعلامية</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .team-hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 10, 10, 0.9)), url('../assets/img/hero.png');
+            background-size: cover;
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 60px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(197, 160, 89, 0.1);
+        }
+
+        .team-img-wrapper {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        /* Different shapes for images */
+        .shape-circle img {
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+        }
+
+        .shape-square img {
+            border-radius: 20px;
+            border: 2px solid var(--border);
+        }
+
+        .shape-oct img {
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        .shape-diamond img {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+
+        .team-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .team-info p {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            opacity: 0.7;
+        }
+
+        .team-social a:hover {
+            color: var(--primary);
+        }
+
+        .dev-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .developer-footer {
+            text-align: center;
+            padding: 40px;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .developer-footer h2 {
+            font-family: 'Tajawal', sans-serif;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+
+    <header>
+        <div class="container">
+            <div class="top-nav">
+                <a href="../index.html" class="logo">
+                    <i class="fas fa-window-restore"></i>
+                    نوافذ <span>الإعلامية</span>
+                </a>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <a href="login.html" id="auth-btn" class="btn btn-primary">دخول</a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <ul id="category-menu">
+                    <li><a href="../index.html">الرئيسية</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="team-hero">
+        <div class="container">
+            <h1 style="font-size: 3rem; color: white;">عائلة نوافذ</h1>
+            <p style="color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin: 20px auto 0;">
+                نحن فريق من المحترفين والمبدعين نعمل بشغف لتقديم الحقيقة بكل دقة وحيادية.
+            </p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="team-grid">
+            <!-- 1. Editor in Chief -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-circle">
+                    <img src="../assets/img/team/formal.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>رئيس التحرير العام</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Lead Developer (Featured) -->
+            <div class="team-card" style="border-width: 2px;">
+                <span class="dev-badge">المطور الرئيسي</span>
+                <div class="team-img-wrapper shape-square">
+                    <img src="../assets/img/team/blazer.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>مهندس البرمجيات ومطور الموقع</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Political Analyst -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-oct">
+                    <img src="../assets/img/team/turtle.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>كبير المحللين السياسيين</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Graphic Designer -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-diamond">
+                    <img src="../assets/img/team/turtle.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>المدير الفني والمصمم</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-behance"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Technical Manager -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-circle" style="filter: grayscale(100%);">
+                    <img src="../assets/img/team/blazer.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>مدير قطاع تكنولوجيا المعلومات</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Photographer -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-square" style="transform: rotate(3deg);">
+                    <img src="../assets/img/team/tshirt.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>رئيس قسم التصوير الفوتوغرافي</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fas fa-camera"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Sports Editor -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-circle" style="border-style: dashed;">
+                    <img src="../assets/img/team/tshirt.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>محرر الشؤون الرياضية</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fas fa-basketball-ball"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Economic Correspondent -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-square" style="filter: sepia(0.5);">
+                    <img src="../assets/img/team/blazer.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>كبير مراسلي الاقتصاد</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fas fa-chart-line"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. HR Manager -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-oct" style="background: rgba(197, 160, 89, 0.2);">
+                    <img src="../assets/img/team/formal.jpg" alt="Mohammed Al-Asad" style="opacity: 0.8;">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>مدير الموارد البشرية</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fas fa-users-cog"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Social Media Specialist -->
+            <div class="team-card">
+                <div class="team-img-wrapper shape-diamond">
+                    <img src="../assets/img/team/tshirt.jpg" alt="Mohammed Al-Asad">
+                </div>
+                <div class="team-info">
+                    <h3>محمد الأسد</h3>
+                    <p>خبير استراتيجيات التواصل الاجتماعي</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-snapchat"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="developer-footer">
+        <div class="container">
+            <h2>مطور الموقع محمد الأسد 2025</h2>
+            <p style="color: var(--text-secondary); margin-top: 10px;">تم التنفيذ بكل احترافية وإبداع - شبكة نوافذ
+                الإعلامية</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/services/api.js"></script>
+    <script src="../assets/js/ui/render.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const savedTheme = localStorage.getItem('nawafidh_theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+            const categories = await NawafidhAPI.categories.getAll();
+            document.getElementById('category-menu').innerHTML += NawafidhRender.categoryNav(categories);
+        });
+    </script>
+</body>
+
+</html>

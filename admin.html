@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | شبكة نوافذ الإعلامية</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f0f2f5;
+            color: #1a1a1a;
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] body {
+            background: #0a0a0a;
+            color: white;
+        }
+
+        .admin-sidebar {
+            width: 280px;
+            background: var(--secondary);
+            color: white;
+            padding: 30px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-sidebar .logo {
+            padding: 0 30px;
+            margin-bottom: 40px;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 30px;
+            color: #b0b0b0;
+            border-right: 4px solid transparent;
+        }
+
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active {
+            color: white;
+            border-right-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .admin-main {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-header {
+            padding: 20px 40px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-content {
+            padding: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-card h4 {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .val {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px 20px;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .badge-status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .published {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .draft {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-surface);
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            border-radius: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+
+    <aside class="admin-sidebar">
+        <div class="logo">نوافذ <span>الإعلامية</span></div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active" onclick="switchTab('dashboard')"><i class="fas fa-chart-line"></i>
+                    الإحصائيات</a></li>
+            <li><a href="#" onclick="switchTab('articles')"><i class="fas fa-newspaper"></i> إدارة الأخبار</a></li>
+            <li><a href="#" onclick="switchTab('categories')"><i class="fas fa-list"></i> الأقسام</a></li>
+            <li><a href="#" onclick="switchTab('breaking')"><i class="fas fa-bolt"></i> شريط العاجل</a></li>
+            <li><a href="#" onclick="switchTab('users')"><i class="fas fa-users-cog"></i> المستخدمين</a></li>
+        </ul>
+        <div style="padding: 0 30px; margin-top: auto;">
+            <button onclick="logout()" class="btn"
+                style="width: 100%; background: rgba(230,57,70,0.1); color: var(--accent);"><i
+                    class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <h2 id="tab-title">لوحة التحكم</h2>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <span id="user-info">أهلاً، <strong id="admin-name">المشرف</strong></span>
+                <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <section class="admin-content" id="tab-dashboard">
+            <div class="form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="stat-card">
+                    <h4>إجمالي الأخبار</h4>
+                    <div class="val" id="stat-articles">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>المشاهدات</h4>
+                    <div class="val" id="stat-views">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>الأقسام</h4>
+                    <div class="val" id="stat-categories">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>المسودات</h4>
+                    <div class="val" id="stat-drafts">0</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <h3 class="sidebar-title">أحدث المقالات المضافة</h3>
+                <div id="recent-articles-table">
+                    <!-- Data -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Management Tab -->
+        <section class="admin-content" id="tab-articles" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h3>قائمة الأخبار</h3>
+                <button onclick="openArticleModal()" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة خبر
+                    جديد</button>
+            </div>
+            <div id="articles-list-container">
+                <!-- Table -->
+            </div>
+        </section>
+
+        <!-- Other tabs placeholders -->
+        <section class="admin-content" id="tab-categories" style="display: none;">
+            <h3>إدارة الأقسام</h3>
+            <p>قريباً في النسخة الكاملة...</p>
+        </section>
+        <section class="admin-content" id="tab-breaking" style="display: none;">
+            <h3>إدارة شريط العاجل</h3>
+            <p>قريباً في النسخة الكاملة...</p>
+        </section>
+        <section class="admin-content" id="tab-users" style="display: none;">
+            <h3>إدارة المستخدمين</h3>
+            <p>قريباً في النسخة الكاملة...</p>
+        </section>
+    </main>
+
+    <!-- Article Modal -->
+    <div id="article-modal" class="modal">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+                <h3 id="modal-title">إضافة خبر جديد</h3>
+                <button onclick="closeModal()"
+                    style="border: none; background: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <form id="article-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>عنوان الخبر</label>
+                        <input type="text" id="art-title" required class="btn"
+                            style="width: 100%; background: var(--bg-body); color: inherit; text-align: right; border: 1px solid var(--border);">
+                    </div>
+                    <div class="form-group">
+                        <label>القسم</label>
+                        <select id="art-category" required class="btn"
+                            style="width: 100%; background: var(--bg-body); color: inherit; border: 1px solid var(--border);">
+                            <!-- Categories -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>الحالة</label>
+                        <select id="art-status" class="btn"
+                            style="width: 100%; background: var(--bg-body); color: inherit; border: 1px solid var(--border);">
+                            <option value="published">منشور</option>
+                            <option value="draft">مسودة</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>رابط الصورة</label>
+                        <input type="text" id="art-image" placeholder="https://..." required class="btn"
+                            style="width: 100%; background: var(--bg-body); color: inherit; text-align: right; border: 1px solid var(--border);">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>محتوى الخبر</label>
+                        <textarea id="art-content" rows="10" required class="btn"
+                            style="width: 100%; background: var(--bg-body); color: inherit; text-align: right; border: 1px solid var(--border); font-family: inherit;"></textarea>
+                    </div>
+                </div>
+                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">حفظ الخبر</button>
+                    <button type="button" onclick="closeModal()" class="btn"
+                        style="background: var(--border);">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/services/api.js"></script>
+    <script src="../assets/js/auth/guard.js"></script>
+    <script src="../assets/js/admin/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+/* 
+   Nawafidh Media Network - Responsive Adjustments
+*/
+
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .grid-main {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-main {
+        height: auto;
+    }
+
+    .news-card {
+        margin-bottom: 20px;
+    }
+
+    .admin-sidebar {
+        width: 80px;
+    }
+
+    .admin-sidebar .logo span,
+    .admin-sidebar .sidebar-menu span,
+    .admin-sidebar button span {
+        display: none;
+    }
+
+    .sidebar-menu li a {
+        justify-content: center;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-nav {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .search-box {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .article-title {
+        font-size: 1.8rem;
+    }
+
+    .main-nav ul {
+        gap: 15px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-info {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .grid-articles {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+}

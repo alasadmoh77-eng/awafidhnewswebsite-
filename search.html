@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث | شبكة نوافذ الإعلامية</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body data-theme="dark">
+
+    <header>
+        <div class="container">
+            <div class="top-nav">
+                <a href="../index.html" class="logo">
+                    <i class="fas fa-window-restore"></i>
+                    نوافذ <span>الإعلامية</span>
+                </a>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <a href="login.html" id="auth-btn" class="btn btn-primary">دخول</a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <ul id="category-menu">
+                    <li><a href="../index.html">الرئيسية</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="margin: 40px 0;">
+            <div class="search-box" style="max-width: 100%; margin-bottom: 20px;">
+                <input type="text" id="page-search-input" placeholder="ابحث عن أخبار ومقالات..."
+                    style="padding: 15px 50px 15px 20px; font-size: 1.2rem;">
+                <i class="fas fa-search search-icon" style="right: 20px; font-size: 1.2rem;"></i>
+            </div>
+            <p id="search-status" style="color: var(--text-secondary);"></p>
+        </div>
+
+        <div class="grid-articles" id="search-grid">
+            <!-- Results -->
+        </div>
+
+        <div id="no-results" style="display: none; text-align: center; padding: 60px 0;">
+            <i class="fas fa-search-minus fa-4x" style="color: var(--border); margin-bottom: 20px;"></i>
+            <h3>عذراً، لم نجد أي نتائج تطابق بحثك</h3>
+            <p style="color: var(--text-secondary); margin-top: 10px;">حاول استخدام كلمات مفتاحية أخرى</p>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 شبكة نوافذ الإعلامية | <a href="team.html">فريق العمل</a></p>
+                <p>مطور الموقع محمد الأسد 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/services/api.js"></script>
+    <script src="../assets/js/ui/render.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const savedTheme = localStorage.getItem('nawafidh_theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+
+            const params = new URLSearchParams(window.location.search);
+            const initialQuery = params.get('q') || '';
+            const input = document.getElementById('page-search-input');
+            input.value = initialQuery;
+
+            const categories = await NawafidhAPI.categories.getAll();
+            document.getElementById('category-menu').innerHTML += NawafidhRender.categoryNav(categories);
+
+            if (initialQuery) {
+                performSearch(initialQuery);
+            }
+
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch(input.value);
+                }
+            });
+        });
+
+        async function performSearch(query) {
+            if (!query.trim()) return;
+
+            document.getElementById('search-grid').innerHTML = NawafidhRender.skeleton(3);
+            const articles = await NawafidhAPI.articles.getAll({ search: query, status: 'published' });
+            const categories = await NawafidhAPI.categories.getAll();
+
+            const grid = document.getElementById('search-grid');
+            const status = document.getElementById('search-status');
+            const noResults = document.getElementById('no-results');
+
+            if (articles.length > 0) {
+                noResults.style.display = 'none';
+                grid.style.display = 'grid';
+                status.textContent = `تم العثور على ${articles.length} نتيجة لبحث: "${query}"`;
+                grid.innerHTML = articles.map(a => NawafidhRender.articleCard(a, categories)).join('');
+            } else {
+                status.textContent = `لا توجد نتائج لبحث: "${query}"`;
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

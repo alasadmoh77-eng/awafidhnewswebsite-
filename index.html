@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شبكة نوافذ الإعلامية | Nawafidh Media Network</title>
+    <!-- Meta Tags for SEO -->
+    <meta name="description"
+        content="شبكة نوافذ الإعلامية - بوابتك للأخبار العالمية والمحلية في السياسة والاقتصاد والرياضة والتقنية.">
+    <meta name="keywords" content="أخبار، سياسة، اقتصاد، رياضة، تقنية، نوافذ">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body data-theme="dark">
+
+    <!-- Breaking News Ticker -->
+    <div class="breaking-news">
+        <div class="breaking-label">عاجل</div>
+        <div class="ticker-wrap">
+            <div class="ticker-content" id="breaking-ticker">
+                <!-- Data from JS -->
+                تحميل الأخبار العاجلة...
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="top-nav">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-window-restore"></i>
+                    نوافذ <span>الإعلامية</span>
+                </a>
+
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="ابحث عن خبر...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <button class="theme-toggle" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="pages/login.html" id="auth-btn" class="btn btn-primary">دخول</a>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <ul id="category-menu">
+                    <li><a href="index.html" class="active">الرئيسية</a></li>
+                    <!-- Categories from JS -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="grid-main" id="featured-section">
+            <div class="featured-main">
+                <div id="hero-article">
+                    <!-- Data from JS -->
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">الأكثر قراءة</h3>
+                    <div id="most-read-list">
+                        <!-- Data from JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Sections -->
+        <section class="section-container">
+            <h2 class="sidebar-title" style="margin-bottom: 30px;">أحدث الأخبار</h2>
+            <div class="grid-articles" id="latest-news-grid">
+                <!-- Data from JS -->
+            </div>
+        </section>
+
+        <section class="section-container" style="margin-top: 60px;">
+            <div class="grid-main">
+                <div id="tech-section">
+                    <h2 class="sidebar-title">تكنولوجيا</h2>
+                    <div class="grid-articles" id="tech-grid" style="grid-template-columns: 1fr;">
+                        <!-- Data from JS -->
+                    </div>
+                </div>
+                <div id="opinion-section">
+                    <h3 class="sidebar-title">مقالات الرأي</h3>
+                    <div id="opinion-list">
+                        <!-- Data from JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <div class="logo footer-logo">نوافذ <span>الإعلامية</span></div>
+                    <p style="color: var(--text-secondary); max-width: 300px;">
+                        شبكة إخبارية مستقلة تقدم تغطية شاملة للأحداث العالمية على مدار الساعة بمنظور احترافي ودقة
+                        متناهية.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>أقسام الموقع</h4>
+                    <ul id="footer-cats">
+                        <!-- Categories from JS -->
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#">عن الشبكة</a></li>
+                        <li><a href="pages/team.html">فريق العمل</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>تابعنا</h4>
+                    <div style="display: flex; gap: 15px; font-size: 1.5rem; margin-top: 15px;">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-fb-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 شبكة نوافذ الإعلامية. جميع الحقوق محفوظة.</p>
+                <p>مطور الموقع محمد الأسد 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/services/api.js"></script>
+    <script src="assets/js/ui/render.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

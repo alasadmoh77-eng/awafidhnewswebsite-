@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الخبر | شبكة نوافذ الإعلامية</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .article-header {
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .article-main-img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .article-content {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            text-align: justify;
+        }
+
+        .share-box {
+            margin-top: 50px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .share-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .share-icons a {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .share-icons a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+
+    <header>
+        <div class="container">
+            <div class="top-nav">
+                <a href="../index.html" class="logo">
+                    <i class="fas fa-window-restore"></i>
+                    نوافذ <span>الإعلامية</span>
+                </a>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <button class="theme-toggle" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="login.html" id="auth-btn" class="btn btn-primary">دخول</a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <ul id="category-menu">
+                    <li><a href="../index.html">الرئيسية</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="article-container" id="article-details">
+            <!-- Loading State -->
+            <div style="padding: 100px 0; text-align: center;">
+                <i class="fas fa-spinner fa-spin fa-3x" style="color: var(--primary);"></i>
+                <p style="margin-top: 20px;">جاري تحميل الخبر...</p>
+            </div>
+        </article>
+
+        <section class="related-news" style="margin-top: 80px;">
+            <h3 class="sidebar-title">أخبار ذات صلة</h3>
+            <div class="grid-articles" id="related-grid">
+                <!-- Data from JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 شبكة نوافذ الإعلامية. جميع الحقوق محفوظة. | <a href="team.html">فريق العمل</a></p>
+                <p>مطور الموقع محمد الأسد 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/services/api.js"></script>
+    <script src="../assets/js/ui/render.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Theme Init
+            const savedTheme = localStorage.getItem('nawafidh_theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+
+            const params = new URLSearchParams(window.location.search);
+            const articleId = params.get('id');
+
+            if (!articleId) {
+                window.location.href = '../index.html';
+                return;
+            }
+
+            // Load Categories for Nav
+            const categories = await NawafidhAPI.categories.getAll();
+            document.getElementById('category-menu').innerHTML += NawafidhRender.categoryNav(categories);
+
+            // Fetch Article
+            const article = await NawafidhAPI.articles.getById(articleId);
+            if (!article) {
+                document.getElementById('article-details').innerHTML = '<h2>الخبر غير موجود</h2>';
+                return;
+            }
+
+            // Update Title
+            document.title = `${article.title} | شبكة نوافذ`;
+
+            // Render Details
+            const container = document.getElementById('article-details');
+            const date = new Date(article.created_at).toLocaleDateString('ar-EG', {
+                year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            container.innerHTML = `
+                <div class="article-header">
+                    <h1 class="article-title">${article.title}</h1>
+                    <div class="article-meta">
+                        <span><i class="fas fa-user"></i> كاتب المحتوى</span>
+                        <span><i class="fas fa-calendar-alt"></i> ${date}</span>
+                        <span><i class="fas fa-eye"></i> ${article.views} مشاهدة</span>
+                    </div>
+                </div>
+                <img src="${article.image}" class="article-main-img" alt="${article.title}">
+                <div class="article-content">
+                    ${article.content.split('\n').map(p => `<p style="margin-bottom: 20px;">${p}</p>`).join('')}
+                </div>
+                <div class="share-box">
+                    <span>مشاركة الخبر:</span>
+                    <div class="share-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+            `;
+
+            // Load Related
+            const allArticles = await NawafidhAPI.articles.getAll({ category_id: article.category_id });
+            const related = allArticles.filter(a => a.id !== article.id).slice(0, 3);
+            const relatedGrid = document.getElementById('related-grid');
+            if (related.length > 0) {
+                // Adjust paths since we are in /pages/
+                relatedGrid.innerHTML = related.map(a => NawafidhRender.articleCard(a, categories)).join('');
+            } else {
+                relatedGrid.innerHTML = '<p>لا توجد أخبار ذات صلة حالياً.</p>';
+            }
+        });
+    </script>
+</body>
+
+</html>
